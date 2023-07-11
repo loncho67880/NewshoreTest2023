@@ -26,7 +26,7 @@ namespace NewshoreAPI.Controllers
             if(result.Count == 0)
                 return NotFound("No existe una ruta");
 
-            return Ok(result);
+            return Ok(result.OrderBy(x=> x.Price));
         }
     }
 }

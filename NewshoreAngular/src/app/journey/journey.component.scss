@@ -1,0 +1,53 @@
+.example-card{
+    border-radius: 2px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin: 1rem;
+}
+
+.mat-mdc-card-header {
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mat-mdc-card-avatar {
+    height: 0px;
+    width: 0px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-bottom: 0px;
+    object-fit: cover;
+}
+
+.mat-mdc-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mat-mdc-card-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+    min-height: 200px;
+    min-width: 100%;
+}
+
+.mat-mdc-list-base {
+    display: flex;
+    min-width: 100%;
+    max-height: 10px;
+}
+
+.mat-grid-list {
+    display: flex;
+    position: relative;
+    min-width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.mat-mdc-button:not(:disabled) {
+    color: white;
+    background: var(--mdc-text-button-label-text-color, inherit);
+    min-width: 200px;
+}

@@ -12,76 +12,84 @@
       <form id="flightform">
         <div class="form-row">
           <div class="form-group">
-            <label for="origin">Origen:</label>
             <mat-form-field class="example-full-width">
-              <mat-label>Number</mat-label>
-              <input type="text"
-                     name="Origen"
-                     placeholder="Pick one"
-                     aria-label="Number"
-                     matInput
-                     [formControl]="myControl"
-                     [matAutocomplete]="auto">
-              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              <mat-label>Origen</mat-label>
+              <input type="text" matInput [formControl]="OrigenControl" [matAutocomplete]="autoOrigen">
+              <mat-autocomplete #autoOrigen="matAutocomplete" [displayWith]="displayFnOrigen">
+                <mat-option *ngFor="let option of filteredOrigen | async" [value]="option">
                   {{option}}
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
-            <!--<p-autoComplete [(ngModel)]="Origen" [suggestions]="suggestionsOrigen"
-              (completeMethod)="searchOrigen($event)"></p-autoComplete>-->
           </div>
           <div class="form-group">
-            <label for="destination">Destino:</label>
-            <div class="card flex justify-content-center">
-              <!--<p-autoComplete [(ngModel)]="Destino" [suggestions]="suggestionsDestino"
-                (completeMethod)="searchDestino($event)"></p-autoComplete>-->
-            </div>
+            <mat-form-field class="example-full-width">
+              <mat-label>Destino</mat-label>
+              <input type="text" matInput [formControl]="DestinoControl" [matAutocomplete]="autoDestino">
+              <mat-autocomplete #autoDestino="matAutocomplete" [displayWith]="displayFnDestino">
+                <mat-option *ngFor="let option of filteredDestino | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
           </div>
           <div class="form-group">
-            <label for="departure">Fecha de salida:</label>
-            <!--<p-calendar [(ngModel)]="dateIni"></p-calendar>-->
+            <mat-form-field>
+              <mat-label>Fecha de salida</mat-label>
+              <input matInput [matDatepicker]="picker">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
           </div>
-          <!--<div *ngIf="idayvuelta" class="form-group">
-            <label for="departure">Fecha de regreso:</label>
-            <p-calendar [(ngModel)]="dateFin"></p-calendar>
-          </div>-->
-          <div class="form-group">
-            <label for="passengers">Pasajeros:</label>
-            <select id="passengers">
-              <option value="1">1 pasajero</option>
-              <option value="2">2 pasajeros</option>
-              <option value="3">3 pasajeros</option>
-              <option value="4">4 pasajeros</option>
-            </select>
+          <div *ngIf="idayvuelta" class="form-group">
+            <mat-form-field>
+              <mat-label>Fecha de llegada</mat-label>
+              <input matInput [matDatepicker]="pickerLlegada">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="pickerLlegada"></mat-datepicker-toggle>
+              <mat-datepicker #pickerLlegada></mat-datepicker>
+            </mat-form-field>
           </div>
           <div class="form-group">
-            <label for="idayvuelta">Ida y vuelta:</label>
-            <!--<p-checkbox [(ngModel)]="idayvuelta" [binary]="true" inputId="binary"></p-checkbox>-->
+            <mat-form-field class="input-width">
+              <mat-label>Moneda</mat-label>
+              <mat-select placeholder="Plans" formControlName="currencyControl" [(value)]="currency" (selectionChange)="changeCurrency(currency)">
+                <mat-option *ngFor="let currency of currencies" [value]="currency">
+                  {{ currency }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-slide-toggle [formControl]="ctrlidayvuelta" name="idayvuelta">Ida y vuelta</mat-slide-toggle>
           </div>
         </div>
-        <button type="button" class="btn">Buscar Vuelo</button>
+        <button type="button" class="btn" (click)="buscarVuelo()">Buscar Vuelo</button>
       </form>
     </div>
   </section>
 
-  <section id="featured-flights">
-    <div class="container">
-      <h2>Vuelos Destacados</h2>
-      <div class="flight-card">
-        <img src="flight1.jpg" alt="Flight 1">
-        <div class="flight-info">
-          <h3>Vuelo a París</h3>
-          <p>Disfruta de la ciudad del amor con nuestro vuelo directo a París.</p>
-        </div>
-      </div>
-      <div class="flight-card">
-        <img src="flight2.jpg" alt="Flight 2">
-        <div class="flight-info">
-          <h3>Vuelo a Tokio</h3>
-          <p>Descubre la magia de Tokio con nuestro vuelo directo a la capital japonesa.</p>
-        </div>
-      </div>
-    </div>
+  <section *ngIf="journies.length > 0" id="featured-flights">
+    <mat-card *ngFor="let journy of journies" class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{journy.origin}}</mat-card-title>
+        <mat-card-subtitle>{{journy.destination}} <h1> {{journy.price | currency}}</h1></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-xl-image [src]="journy.srcimage" alt="Flight">
+      <mat-card-content>
+        <mat-list *ngFor="let flight of journy.flights" role="list">
+          <mat-grid-list cols="3" rowHeight="3:1">
+            <mat-grid-tile>{{flight.origin}} - {{flight.destination}}</mat-grid-tile>
+            <mat-grid-tile>{{flight.price | currency}}</mat-grid-tile>
+            <mat-grid-tile>{{flight.transport.flightCarrier}} {{flight.transport.flightNumber}}</mat-grid-tile>
+          </mat-grid-list>
+        </mat-list>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="accent">Comprar</button>
+      </mat-card-actions>
+    </mat-card>
   </section>
 </main>

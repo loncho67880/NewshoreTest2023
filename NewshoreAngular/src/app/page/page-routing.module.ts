@@ -7,7 +7,7 @@ const routes: Routes = [
     component: PageComponent,
     children: [
       { path: 'flights',
-        loadChildren: () => import('../journey/journey-routing.module').then(mod => mod.JourneyRoutingModule)
+        loadChildren: () => import('../journey/journey.module').then(mod => mod.JourneyModule)
       },
       { path: '',
         redirectTo: 'flights',
