@@ -7,15 +7,13 @@ namespace Infrastructure
 {
     public class PersistenceContext : DbContext
     {
-        private readonly IConfiguration Config;
 
         public DbSet<Flight> Flight { get; set; }
         public DbSet<Journey> Journey { get; set; }
         public DbSet<Transport> Transport { get; set; }
 
-        public PersistenceContext(DbContextOptions<PersistenceContext> options, IConfiguration config) : base(options)
+        public PersistenceContext(DbContextOptions<PersistenceContext> options) : base(options)
         {
-            this.Config = config;
         }
 
         public async Task CommitAsync()
@@ -25,11 +23,5 @@ namespace Infrastructure
             ConfiguredTaskAwaitable<int> configuredTaskAwaitable = ((DbContext)persistenceContext).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             await configuredTaskAwaitable;
         }
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    RelationalModelBuilderExtensions.HasDefaultSchema( .GetValue<string>(this.Config, "SchemaName"));
-        //    base.OnModelCreating(modelBuilder);
-        //}
     }
 }
