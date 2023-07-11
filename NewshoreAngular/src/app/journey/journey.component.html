@@ -9,12 +9,27 @@
   <section id="booking">
     <div class="container">
       <h2>Reserva tu vuelo</h2>
-      <form id="flight-form">
+      <form id="flightform">
         <div class="form-row">
           <div class="form-group">
             <label for="origin">Origen:</label>
+            <mat-form-field class="example-full-width">
+              <mat-label>Number</mat-label>
+              <input type="text"
+                     name="Origen"
+                     placeholder="Pick one"
+                     aria-label="Number"
+                     matInput
+                     [formControl]="myControl"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
             <!--<p-autoComplete [(ngModel)]="Origen" [suggestions]="suggestionsOrigen"
-            (completeMethod)="searchOrigen($event)"></p-autoComplete>-->
+              (completeMethod)="searchOrigen($event)"></p-autoComplete>-->
           </div>
           <div class="form-group">
             <label for="destination">Destino:</label>
@@ -27,10 +42,10 @@
             <label for="departure">Fecha de salida:</label>
             <!--<p-calendar [(ngModel)]="dateIni"></p-calendar>-->
           </div>
-          <div *ngIf="idayvuelta" class="form-group">
+          <!--<div *ngIf="idayvuelta" class="form-group">
             <label for="departure">Fecha de regreso:</label>
             <p-calendar [(ngModel)]="dateFin"></p-calendar>
-          </div>
+          </div>-->
           <div class="form-group">
             <label for="passengers">Pasajeros:</label>
             <select id="passengers">

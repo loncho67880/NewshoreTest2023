@@ -2,11 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JourneyComponent } from './journey.component';
 import { JourneyRoutingModule } from './journey-routing.module';
-import { CalendarModule } from 'primeng/calendar';
-import { FormsModule } from '@angular/forms';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -14,12 +11,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
   ],
   imports: [
     CommonModule,
-    JourneyRoutingModule,
-    CalendarModule,
     FormsModule,
-    AutoCompleteModule,
-    CheckboxModule,
-    InputSwitchModule
+    ReactiveFormsModule,
+    JourneyRoutingModule,
+    MatAutocompleteModule
   ]
 })
 export class JourneyModule { }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { JournyServiceService } from '../services/journey.service';
+import { FormControl } from '@angular/forms';
+//import { JournyServiceService } from '../services/journey.service';
 
 @Component({
   selector: 'app-journey',
@@ -7,15 +8,14 @@ import { JournyServiceService } from '../services/journey.service';
   styleUrls: ['./journey.component.scss']
 })
 export class JourneyComponent {
-  dateIni: Date | undefined;
+  myControl = new FormControl('');
+  /*
   dateFin: Date | undefined;
   idayvuelta: boolean = false;
 
   items!: any[];
 
-  Origen: any;
 
-  suggestionsOrigen!: any[];
 
   Destino: any;
 
@@ -27,11 +27,9 @@ export class JourneyComponent {
     });
   }
 
-  searchOrigen(event: any): void{
-    this.suggestionsDestino = [...Array(10).keys()].map(item => event.query + '-' + item);
-  }
+  
 
   searchDestino(event: any): void{
       this.suggestionsDestino = [...Array(10).keys()].map(item => event.query + '-' + item);
-  }
+  }*/
 }
